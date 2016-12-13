@@ -1,0 +1,19 @@
+﻿{"frames": {
+
+"curtain2/Bitmap 3":
+{
+	"frame": {"x":0,"y":0,"w":1127,"h":1819},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1127,"h":1819},
+	"sourceSize": {"w":1127,"h":1819}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "16.0.0.112",
+	"image": "chris_atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1"
+}
+}

@@ -1,0 +1,59 @@
+﻿{"frames": {
+
+"girl2/Bitmap 42":
+{
+	"frame": {"x":1481,"y":1464,"w":423,"h":373},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":423,"h":373},
+	"sourceSize": {"w":423,"h":373}
+},
+"girl2/Bitmap 53":
+{
+	"frame": {"x":0,"y":0,"w":998,"h":1257},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":998,"h":1257},
+	"sourceSize": {"w":998,"h":1257}
+},
+"lover2/Bitmap 29":
+{
+	"frame": {"x":998,"y":944,"w":483,"h":871},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":483,"h":871},
+	"sourceSize": {"w":483,"h":871}
+},
+"man2/Bitmap 5":
+{
+	"frame": {"x":0,"y":1257,"w":986,"h":712},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":986,"h":712},
+	"sourceSize": {"w":986,"h":712}
+},
+"start2/Bitmap 44 copy":
+{
+	"frame": {"x":998,"y":0,"w":863,"h":944},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":863,"h":944},
+	"sourceSize": {"w":863,"h":944}
+},
+"start2/Bitmap 48 copy":
+{
+	"frame": {"x":1481,"y":944,"w":547,"h":520},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":547,"h":520},
+	"sourceSize": {"w":547,"h":520}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "16.0.0.112",
+	"image": "chris_atlas20.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1"
+}
+}
