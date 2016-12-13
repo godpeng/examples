@@ -4,7 +4,6 @@
 		<meta charset="UTF-8">
 		<title>chris</title>
 		<script src="libs/flwebgl-0.2.min.js"></script>
-		<script src="assets/chris_actions.js"></script>
 		<script>
 			var player, result = flwebgl.Player.S_OK;
 			var atlasList = [], content = undefined;
@@ -14,28 +13,10 @@
 				getAsset("assets/chris_atlas.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas.png"}); assetLoaded(); });
 				getAsset("assets/chris_atlas2.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas2.png"}); assetLoaded(); });
 				getAsset("assets/chris_atlas3.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas3.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas4.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas4.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas5.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas5.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas6.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas6.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas7.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas7.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas8.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas8.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas9.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas9.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas10.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas10.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas11.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas11.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas12.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas12.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas13.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas13.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas14.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas14.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas15.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas15.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas16.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas16.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas17.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas17.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas18.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas18.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas19.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas19.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas20.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas20.png"}); assetLoaded(); });
-				getAsset("assets/chris_atlas21.json", function (response) { atlasList.push({json:JSON.parse(response), image:"assets/chris_atlas21.png"}); assetLoaded(); });
 			}
 
 			function assetLoaded() {
-				if (atlasList.length == 21 && content) {
+				if (atlasList.length == 3 && content) {
 					var canvas = document.getElementById("canvas");
 					player = new flwebgl.Player();
 
