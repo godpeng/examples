@@ -13,14 +13,28 @@
       margin: 0;
     }
     .next {
+      position: absolute;
+      bottom: 0;
+      left: 0;
       width: 100px;
       height: 100px;
       background: #f00;
     }
+
+    .scene {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
     </style>
   </head>
   <body>
-    <div class="stage"></div>
+    <div class="stage">
+      <div class="scene start"></div>
+      <div class="scene cover"></div>
+    </div>
     <div class="next"></div>
     <div class="error" id="err_nowebglsupport" style="display:none;"><span>Your browser does not support WebGL.</span>&nbsp;<span><a href="http://get.webgl.org">Check WebGL support.</a></span></div>
     <div class="error" id="err_extensionnotpresent" style="display:none;">A required WebGL extension is not supported by your browser.</div>

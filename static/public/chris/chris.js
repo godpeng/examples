@@ -1,8 +1,12 @@
 main();
 
 
+var nextHandler = null;
+
+
 function main() {
   createPlayer({
+    name: 'cover',
     assets: {
       content: 'assets/1-cover.json',
       atlas: [
@@ -10,56 +14,97 @@ function main() {
         'assets/1-cover_atlas2'
       ]
     }
-  }).then(function(player) {
-    scaleStage(player);
-
-    player.ready(function() {
-      player.play();
-      setup(player);
-    })
-  });
-}
-
-
-function setup(player) {
-  var sgf = player.getScenegraphFactory();
-  var curtain = sgf.createMovieClipInstance('curtain');
-
-  var stage = player.getStage();
-
-  stage.addChild(curtain);
-  curtain.stop();
+  }).then(setupCover);
 
 
   var btn = document.querySelector('.next');
   btn.addEventListener('click', function() {
-    next();
-  });
+    nextHandler && nextHandler();
+    nextHandler = null;
+  }, false);
+}
+
+
+function setupCover(player) {
+  player.play();
+
+  var sgf = player.getScenegraphFactory();
+  var curtain = sgf.createMovieClipInstance('curtain');
+
+  var stage = player.getStage();
+  stage.addChild(curtain);
+  curtain.stop();
 
   curtain.addEventListener(flwebgl.events.Event.ENTER_FRAME, function() {
     if (curtain.getCurrentFrame() > 15) {
       curtain.stop();
     }
   });
+
+
+  var startPlayerDefer = createPlayer({
+    name: 'start',
+    assets: {
+      content: 'assets/2-start.json',
+      atlas: [
+        'assets/2-start_atlas',
+        'assets/2-start_atlas2'
+      ]
+    },
+  });
+
+  startPlayerDefer.then(function(startPlayer) {
+    setupStart(startPlayer);
+    nextHandler = function() {
+      const container = player.canvas.parentNode;
+      container.style.display = 'none'
+      startPlayer.getStage().play();
+    }
+  });
 }
 
 
-function next() {
-  console.log('next');
+function setupStart(player) {
+  player.play();
+
+  var sgf = player.getScenegraphFactory();
+  var curtain = sgf.createMovieClipInstance('curtain');
+
+  var stage = player.getStage();
+  stage.addChild(curtain);
+  curtain.stop();
+
+  curtain.addEventListener(flwebgl.events.Event.ENTER_FRAME, function() {
+    if (curtain.getCurrentFrame() > 15) {
+      curtain.stop();
+    }
+  });
+
+  var flag = false;
+  stage.addEventListener(flwebgl.events.Event.EXIT_FRAME, function() {
+    if (!flag && stage.getCurrentFrame() === stage.getTotalFrames()) {
+      flag = true;
+      curtain.play();
+    }
+  });
+
+  // 不知道为什么一定要等一下才能stop
+  setTimeout(function() {
+    stage.gotoAndStop(1);
+  }, 0)
 }
 
 
 function createPlayer(options) {
   return loadAssets(options.assets).then(function(assets) {
-    return new Promise(function(resolve) {
-      var container = document.querySelector('.stage');
-      var canvas = document.createElement('canvas');
-      container.append(canvas);
+    var player = new flwebgl.Player();
 
-      var player = new flwebgl.Player();
-      initPlayer(canvas, player, assets);
-      resolve(player);
-    });
+    var container = document.querySelector('.scene.' + options.name);
+    var canvas = document.createElement('canvas');
+    container.appendChild(canvas);
+    player.canvas = canvas;
+
+    return initPlayer(player, assets);
   })
 }
 
@@ -81,17 +126,16 @@ function loadAssets(opts) {
 }
 
 
-function initPlayer(canvas, player, assets) {
-  player.canvas = canvas;
-
+function initPlayer(player, assets) {
   var textures = assets.atlas.map(function(item) {
     return new flwebgl.TextureAtlas(item.json, item.image);
   });
 
-  var defer = new Promise(function(resolve, reject) {
-    var result = player.init(canvas, assets.content, textures, function() {
+  return new Promise(function(resolve, reject) {
+    var result = player.init(player.canvas, assets.content, textures, function() {
       if (result === flwebgl.Player.S_OK) {
-        resolve();
+        scaleStage(player);
+        resolve(player);
       } else {
         reject(new Error(result));
       }
@@ -103,8 +147,6 @@ function initPlayer(canvas, player, assets) {
       reject(new Error('required extension not present'));
     }
   });
-
-  player.ready = defer.then.bind(defer);
 }
 
 
