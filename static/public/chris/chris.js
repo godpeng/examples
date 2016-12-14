@@ -1,29 +1,23 @@
-ready();
+main();
 
 
-function ready() {
-  loadAssets({
-    content: 'assets/1-cover.json',
-    atlas: [
-      'assets/1-cover_atlas',
-      'assets/1-cover_atlas2'
-    ]
-  }).then(assetLoaded);
-}
-
-function assetLoaded(assets) {
-  var container = document.querySelector('.stage');
-  var canvas = document.createElement('canvas');
-  container.append(canvas);
-
-  var player = initPlayer(canvas, assets, function() {
-    player.play();
-    setup(player);
-  });
-
-  if (player) {
+function main() {
+  createPlayer({
+    assets: {
+      content: 'assets/1-cover.json',
+      atlas: [
+        'assets/1-cover_atlas',
+        'assets/1-cover_atlas2'
+      ]
+    }
+  }).then(function(player) {
     scaleStage(player);
-  }
+
+    player.ready(function() {
+      player.play();
+      setup(player);
+    })
+  });
 }
 
 
@@ -55,6 +49,21 @@ function next() {
 }
 
 
+function createPlayer(options) {
+  return loadAssets(options.assets).then(function(assets) {
+    return new Promise(function(resolve) {
+      var container = document.querySelector('.stage');
+      var canvas = document.createElement('canvas');
+      container.append(canvas);
+
+      var player = new flwebgl.Player();
+      initPlayer(canvas, player, assets);
+      resolve(player);
+    });
+  })
+}
+
+
 function loadAssets(opts) {
   var list = opts.atlas.map(function(name) {
     return ajax({ url: name + '.json' });
@@ -72,33 +81,30 @@ function loadAssets(opts) {
 }
 
 
-function initPlayer(canvas, assets, cb) {
-  var player = new flwebgl.Player();
+function initPlayer(canvas, player, assets) {
   player.canvas = canvas;
 
   var textures = assets.atlas.map(function(item) {
     return new flwebgl.TextureAtlas(item.json, item.image);
   });
 
-  var result = player.init(canvas, assets.content, textures, function() {
-    if (result === flwebgl.Player.S_OK) {
-      cb();
-    } else {
-      console.error(resut);
+  var defer = new Promise(function(resolve, reject) {
+    var result = player.init(canvas, assets.content, textures, function() {
+      if (result === flwebgl.Player.S_OK) {
+        resolve();
+      } else {
+        reject(new Error(result));
+      }
+    });
+
+    if (result === flwebgl.Player.E_CONTEXT_CREATION_FAILED) {
+      reject(new Error('context creation failed'));
+    } else if (result === flwebgl.Player.E_REQUIRED_EXTENSION_NOT_PRESENT) {
+      reject(new Error('required extension not present'));
     }
   });
 
-  if (result === flwebgl.Player.E_CONTEXT_CREATION_FAILED) {
-    console.error('context creation failed');
-    return null;
-  }
-
-  if (result === flwebgl.Player.E_REQUIRED_EXTENSION_NOT_PRESENT) {
-    console.error('required extension not present');
-    return null;
-  }
-
-  return player;
+  player.ready = defer.then.bind(defer);
 }
 
 
