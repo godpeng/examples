@@ -11,9 +11,11 @@ function ready() {
   }).then(assetLoaded);
 }
 
-
 function assetLoaded(assets) {
-  var canvas = document.getElementById('canvas');
+  var container = document.querySelector('.stage');
+  var canvas = document.createElement('canvas');
+  container.append(canvas);
+
   var player = initPlayer(canvas, assets, function() {
     player.play();
     setup(player);
@@ -72,6 +74,8 @@ function loadAssets(opts) {
 
 function initPlayer(canvas, assets, cb) {
   var player = new flwebgl.Player();
+  player.canvas = canvas;
+
   var textures = assets.atlas.map(function(item) {
     return new flwebgl.TextureAtlas(item.json, item.image);
   });
@@ -114,6 +118,8 @@ function ajax(params) {
 
 function scaleStage(player) {
   //Resize the canvas and reset the viewport
+  var canvas = player.canvas;
+
   var w = player.getStageWidth();
   var h = player.getStageHeight();
   canvas.width = w;
